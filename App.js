@@ -1,11 +1,21 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import CoverScreen from './src/CoverScreen';
+import ReaderScreen from './src/ReaderScreen';
+import { poems } from './src/data';
 
 export default function App() {
+  const [isBookOpen, setIsBookOpen] = useState(false);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      {isBookOpen ? (
+        <ReaderScreen poems={poems} onClose={() => setIsBookOpen(false)} />
+      ) : (
+        <CoverScreen onOpenBook={() => setIsBookOpen(true)} />
+      )}
+      <StatusBar style={isBookOpen ? "dark" : "light"} />
     </View>
   );
 }
@@ -13,8 +23,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#3d253d',
   },
 });
